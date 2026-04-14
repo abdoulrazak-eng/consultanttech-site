@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ConsultantTech — Data & AI Solutions for East Africa</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --deep: #0A0E1A;
+  --navy: #0F1629;
+  --surface: #151B30;
+  --card: #1A2140;
+  --border: rgba(255,255,255,0.06);
+  --amber: #E8A020;
+  --amber-glow: #F0B840;
+  --amber-dim: rgba(232,160,32,0.15);
+  --teal: #2DD4A8;
+  --teal-dim: rgba(45,212,168,0.12);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59,130,246,0.12);
+  --text: #E8ECF4;
+  --text-mid: #94A3B8;
+  --text-dim: #64748B;
+  --white: #FFFFFF;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--deep);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Utility ─── */
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* ─── Animated Background Grid ─── */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.grid-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(232,160,32,0.04), transparent),
+              radial-gradient(ellipse 50% 40% at 80% 100%, rgba(45,212,168,0.03), transparent);
+}
+
+/* ─── Floating Orbs ─── */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb-1 { width: 500px; height: 500px; background: rgba(232,160,32,0.08); top: -10%; right: -5%; animation: orbFloat 20s ease-in-out infinite; }
+.orb-2 { width: 400px; height: 400px; background: rgba(45,212,168,0.06); bottom: 10%; left: -5%; animation: orbFloat 25s ease-in-out infinite reverse; }
+.orb-3 { width: 300px; height: 300px; background: rgba(59,130,246,0.05); top: 50%; right: 20%; animation: orbFloat 18s ease-in-out infinite 5s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+/* ─── Navigation ─── */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 1.25rem 0;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(0px);
+}
+
+nav.scrolled {
+  background: rgba(10,14,26,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.8rem 0;
+}
+
+nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--amber), var(--amber-glow));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--deep);
+  letter-spacing: -0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.25));
+  border-radius: inherit;
+}
+
+.logo-text {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--white);
+  letter-spacing: -0.3px;
+}
+
+.logo-text span {
+  color: var(--amber);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-mid);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a:hover { color: var(--white); }
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--amber);
+  border-radius: 1px;
+  transition: width 0.3s;
+}
+
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  padding: 0.6rem 1.5rem !important;
+  background: linear-gradient(135deg, var(--amber), var(--amber-glow));
+  color: var(--deep) !important;
+  border-radius: 8px;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  transition: transform 0.3s, box-shadow 0.3s !important;
+}
+
+.nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(232,160,32,0.3);
+}
+
+.nav-cta::after { display: none !important; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* ─── Hero Section ─── */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 8rem 0 4rem;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 720px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem 0.4rem 0.5rem;
+  background: var(--amber-dim);
+  border: 1px solid rgba(232,160,32,0.2);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--amber-glow);
+  margin-bottom: 2rem;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--amber);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s ease 0.15s both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--amber), var(--amber-glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: var(--text-mid);
+  max-width: 560px;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s ease 0.45s both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2rem;
+  background: linear-gradient(135deg, var(--amber), var(--amber-glow));
+  color: var(--deep);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(232,160,32,0.35);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2rem;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.04);
+}
+
+/* Hero Visual */
+.hero-visual {
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 520px;
+  height: 520px;
+  animation: fadeUp 1s ease 0.5s both;
+}
+
+.data-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  animation: ringRotate 40s linear infinite;
+}
+
+.data-ring:nth-child(1) { inset: 0; border-color: rgba(232,160,32,0.1); }
+.data-ring:nth-child(2) { inset: 40px; border-color: rgba(45,212,168,0.08); animation-direction: reverse; animation-duration: 35s; }
+.data-ring:nth-child(3) { inset: 80px; border-color: rgba(59,130,246,0.06); animation-duration: 45s; }
+
+.data-ring .node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 50%;
+  left: -5px;
+}
+
+.data-ring:nth-child(1) .node { background: var(--amber); box-shadow: 0 0 20px rgba(232,160,32,0.5); }
+.data-ring:nth-child(2) .node { background: var(--teal); box-shadow: 0 0 20px rgba(45,212,168,0.5); top: 10%; left: 90%; }
+.data-ring:nth-child(3) .node { background: var(--blue); box-shadow: 0 0 20px rgba(59,130,246,0.5); top: 85%; left: 15%; }
+
+@keyframes ringRotate { to { transform: rotate(360deg); } }
+
+.hero-center-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--surface), var(--card));
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+}
+
+/* Stats Row */
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+
+.hero-stats .stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.hero-stats .stat-num span { color: var(--amber); }
+
+.hero-stats .stat-label {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+  letter-spacing: 0.03em;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Trusted By ─── */
+.trusted {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.trusted-label {
+  text-align: center;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.trusted-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.5rem;
+  flex-wrap: wrap;
+  opacity: 0.45;
+}
+
+.trusted-logos .logo-item {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.trusted-logos .logo-item span {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+/* ─── Section Shared ─── */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 4rem;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--amber);
+  margin-bottom: 1rem;
+}
+
+.section-tag::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--amber);
+}
+
+.section-header h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.section-header p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-mid);
+}
+
+/* ─── Services ─── */
+.services {
+  padding: 6rem 0;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.service-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  transition: all 0.4s ease;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--amber), var(--teal));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.service-card:hover {
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.service-card:hover::before { opacity: 1; }
+
+.service-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.service-icon.amber { background: var(--amber-dim); }
+.service-icon.teal { background: var(--teal-dim); }
+.service-icon.blue { background: var(--blue-dim); }
+
+.service-card h3 {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+
+.service-card p {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--text-mid);
+  margin-bottom: 1.5rem;
+}
+
+.service-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.service-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-mid);
+}
+
+.service-features li::before {
+  content: '✓';
+  font-size: 0.75rem;
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* ─── About / Why Us ─── */
+.about {
+  padding: 6rem 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-visual {
+  position: relative;
+}
+
+.about-card-stack {
+  position: relative;
+  height: 420px;
+}
+
+.about-float-card {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.about-float-card:nth-child(1) {
+  top: 0;
+  left: 0;
+  width: 280px;
+  z-index: 3;
+}
+
+.about-float-card:nth-child(2) {
+  top: 60px;
+  right: 0;
+  width: 240px;
+  z-index: 2;
+}
+
+.about-float-card:nth-child(3) {
+  bottom: 0;
+  left: 40px;
+  width: 300px;
+  z-index: 1;
+}
+
+.afc-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 0.5rem;
+}
+
+.afc-value {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.afc-value span { color: var(--amber); }
+
+.afc-bar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.afc-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+
+.afc-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 1.5s ease;
+}
+
+.afc-bar-fill.amber { background: linear-gradient(90deg, var(--amber), var(--amber-glow)); }
+.afc-bar-fill.teal { background: linear-gradient(90deg, var(--teal), #4AE8C0); }
+.afc-bar-fill.blue { background: linear-gradient(90deg, var(--blue), #60A5FA); }
+
+.about-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+.about-content h2 em {
+  font-style: italic;
+  color: var(--amber);
+}
+
+.about-content > p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-mid);
+  margin-bottom: 2rem;
+}
+
+.about-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pillar {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.pillar-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--amber-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--amber);
+}
+
+.pillar h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.25rem;
+}
+
+.pillar p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-mid);
+}
+
+/* ─── Industries ─── */
+.industries {
+  padding: 6rem 0;
+}
+
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.industry-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.35s ease;
+}
+
+.industry-card:hover {
+  background: var(--card);
+  border-color: rgba(232,160,32,0.15);
+  transform: translateY(-3px);
+}
+
+.industry-emoji {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.industry-card h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+
+.industry-card p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ─── SmartEco Feature ─── */
+.smarteco {
+  padding: 6rem 0;
+}
+
+.smarteco-banner {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--card) 50%, var(--surface) 100%);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.smarteco-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(45,212,168,0.08), transparent 60%);
+  pointer-events: none;
+}
+
+.smarteco-content .section-tag { margin-bottom: 1rem; }
+
+.smarteco-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.smarteco-content h2 em {
+  font-style: italic;
+  color: var(--teal);
+}
+
+.smarteco-content > p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-mid);
+  margin-bottom: 2rem;
+}
+
+.smarteco-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.smarteco-stat {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.smarteco-stat .val {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--teal);
+}
+
+.smarteco-stat .lbl {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.smarteco-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.eco-graphic {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, var(--teal-dim), transparent 70%);
+  border: 1px solid rgba(45,212,168,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.eco-graphic::before {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  border: 1px dashed rgba(45,212,168,0.15);
+  animation: ringRotate 30s linear infinite;
+}
+
+.eco-graphic .eco-center {
+  font-size: 4rem;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* ─── Regions ─── */
+.regions {
+  padding: 6rem 0;
+}
+
+.regions-flex {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.regions-left {
+  flex: 1;
+}
+
+.regions-left h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.regions-left p {
+  font-size: 1rem;
+  color: var(--text-mid);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.region-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.region-tag {
+  padding: 0.5rem 1.2rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  transition: all 0.3s;
+}
+
+.region-tag.active {
+  border-color: rgba(232,160,32,0.3);
+  background: var(--amber-dim);
+  color: var(--amber-glow);
+}
+
+.regions-right {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.region-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.region-card:hover {
+  border-color: rgba(255,255,255,0.1);
+}
+
+.region-card .rc-flag {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.region-card h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 0.3rem;
+}
+
+.region-card p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ─── Testimonial ─── */
+.testimonials {
+  padding: 6rem 0;
+}
+
+.testimonial-card {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 3rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  position: relative;
+}
+
+.testimonial-card::before {
+  content: '"';
+  font-family: var(--font-display);
+  font-size: 6rem;
+  color: var(--amber);
+  opacity: 0.2;
+  position: absolute;
+  top: 0.5rem;
+  left: 2rem;
+  line-height: 1;
+}
+
+.testimonial-card blockquote {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-author {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.testimonial-role {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-top: 0.2rem;
+}
+
+/* ─── CTA ─── */
+.cta {
+  padding: 6rem 0 8rem;
+}
+
+.cta-box {
+  text-align: center;
+  padding: 5rem 3rem;
+  background: linear-gradient(135deg, rgba(232,160,32,0.08), rgba(45,212,168,0.06));
+  border: 1px solid rgba(232,160,32,0.12);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(232,160,32,0.06), transparent 60%);
+}
+
+.cta-box h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.cta-box h2 em {
+  font-style: italic;
+  color: var(--amber);
+}
+
+.cta-box p {
+  font-size: 1.05rem;
+  color: var(--text-mid);
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  position: relative;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+}
+
+/* ─── Footer ─── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 4rem 0 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin-top: 1rem;
+  max-width: 280px;
+}
+
+.footer-col h4 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-col a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: var(--text-mid);
+  transition: color 0.3s;
+}
+
+.footer-col a:hover { color: var(--white); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-socials a {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text-mid);
+  font-size: 0.85rem;
+  transition: all 0.3s;
+}
+
+.footer-socials a:hover {
+  border-color: var(--amber);
+  color: var(--amber);
+  background: var(--amber-dim);
+}
+
+/* ─── Scroll Animations ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .hero-visual { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-visual { order: 2; }
+  .industry-grid { grid-template-columns: repeat(2, 1fr); }
+  .smarteco-banner { grid-template-columns: 1fr; }
+  .smarteco-visual { display: none; }
+  .regions-flex { flex-direction: column; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .hero { padding: 7rem 0 3rem; min-height: auto; }
+  .hero-stats { gap: 1.5rem; }
+  .smarteco-stats { grid-template-columns: 1fr; }
+  .regions-right { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  .cta-box { padding: 3rem 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .hero h1 { font-size: 2.2rem; }
+  .hero-actions { flex-direction: column; }
+  .hero-stats { flex-direction: column; gap: 1rem; }
+  .industry-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Background Elements -->
+<div class="grid-bg"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <div class="container">
+    <a href="#" class="logo">
+      <div class="logo-icon">CT</div>
+      <div class="logo-text">consultant<span>Tech</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#industries">Industries</a></li>
+      <li><a href="#smarteco">SmartEco</a></li>
+      <li><a href="#regions">Regions</a></li>
+      <li><a href="#contact" class="nav-cta">Get Started</a></li>
+    </ul>
+    <div class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge"><span class="dot"></span> East Africa's Technology Partner</div>
+      <h1>Transforming Data into <em>Intelligent</em> Business Decisions</h1>
+      <p>We deliver enterprise-grade Data Analytics, Business Intelligence, and AI/ML solutions tailored for East African businesses — from Kigali to Nairobi and beyond.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Schedule a Consultation →</a>
+        <a href="#services" class="btn-secondary">Explore Our Services</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">12<span>+</span></div>
+          <div class="stat-label">Years of IT Expertise</div>
+        </div>
+        <div>
+          <div class="stat-num">50<span>+</span></div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">East African Markets</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Hero Visual -->
+  <div class="hero-visual">
+    <div class="data-ring"><div class="node"></div></div>
+    <div class="data-ring"><div class="node"></div></div>
+    <div class="data-ring"><div class="node"></div></div>
+    <div class="hero-center-icon">📊</div>
+  </div>
+</section>
+
+<!-- Trusted By -->
+<section class="trusted">
+  <div class="container">
+    <div class="trusted-label">Trusted by Industry Leaders Across East Africa</div>
+    <div class="trusted-logos">
+      <div class="logo-item">Radisson <span>Blu</span></div>
+      <div class="logo-item">Marriott <span>Hotels</span></div>
+      <div class="logo-item">Serena <span>Hotels</span></div>
+      <div class="logo-item">DTE <span>Energy</span></div>
+      <div class="logo-item">Kigali <span>Innovation City</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">What We Do</div>
+      <h2>End-to-End Technology Solutions for Modern Businesses</h2>
+      <p>From raw data to actionable intelligence — we help organizations harness the full power of their information assets.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon amber">📈</div>
+        <h3>Data Analytics & Business Intelligence</h3>
+        <p>Turn complex datasets into clear, actionable insights with advanced dashboards, automated reporting, and predictive analytics.</p>
+        <ul class="service-features">
+          <li>Interactive dashboards & visualizations</li>
+          <li>ETL pipeline design & optimization</li>
+          <li>KPI tracking & performance analytics</li>
+          <li>Custom report generation</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon teal">🤖</div>
+        <h3>AI & Machine Learning Solutions</h3>
+        <p>Deploy intelligent systems that automate decision-making, detect patterns, and unlock new efficiencies across your operations.</p>
+        <ul class="service-features">
+          <li>Predictive modeling & forecasting</li>
+          <li>Computer vision & image analysis</li>
+          <li>Natural language processing</li>
+          <li>AI-powered automation workflows</li>
+        </ul>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon blue">🛡️</div>
+        <h3>IT Architecture & Cybersecurity</h3>
+        <p>Build resilient, secure technology foundations with enterprise architecture design and NIST-aligned cybersecurity assessments.</p>
+        <ul class="service-features">
+          <li>Enterprise architecture consulting</li>
+          <li>Cloud migration & Azure solutions</li>
+          <li>NIST cybersecurity framework</li>
+          <li>Security audits & compliance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About / Why Us -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-card-stack">
+          <div class="about-float-card">
+            <div class="afc-label">Client Satisfaction</div>
+            <div class="afc-value">98<span>%</span></div>
+            <div class="afc-bar-group">
+              <div class="afc-bar"><div class="afc-bar-fill amber" style="width:98%"></div></div>
+            </div>
+          </div>
+          <div class="about-float-card">
+            <div class="afc-label">Core Expertise</div>
+            <div class="afc-bar-group">
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-dim);margin-bottom:0.3rem"><span>Data Analytics</span><span>95%</span></div>
+              <div class="afc-bar"><div class="afc-bar-fill amber" style="width:95%"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-dim);margin-bottom:0.3rem;margin-top:0.6rem"><span>AI / ML</span><span>90%</span></div>
+              <div class="afc-bar"><div class="afc-bar-fill teal" style="width:90%"></div></div>
+              <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text-dim);margin-bottom:0.3rem;margin-top:0.6rem"><span>Cybersecurity</span><span>88%</span></div>
+              <div class="afc-bar"><div class="afc-bar-fill blue" style="width:88%"></div></div>
+            </div>
+          </div>
+          <div class="about-float-card">
+            <div class="afc-label">Projects Completed in 2025</div>
+            <div class="afc-value" style="font-size:1.5rem;">18 <span style="font-size:0.9rem;color:var(--teal)">↑ 40%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <div class="section-tag">Why ConsultantTech</div>
+        <h2>Deep Expertise. <em>African Context.</em> Global Standards.</h2>
+        <p>We combine over a decade of enterprise IT experience with deep understanding of East Africa's unique business landscape — delivering world-class solutions that work here.</p>
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-num">01</div>
+            <div>
+              <h4>Enterprise-Grade Experience</h4>
+              <p>12+ years designing data infrastructure for Fortune 500 companies, now applied to Africa's fastest-growing markets.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">02</div>
+            <div>
+              <h4>Local Presence, Global Outlook</h4>
+              <p>Offices in Kigali with reach across Rwanda, Kenya, Uganda, Tanzania, DRC, and Burundi.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-num">03</div>
+            <div>
+              <h4>Certified & Proven</h4>
+              <p>Microsoft Azure certified, MIT Cybersecurity credentials, and a track record of measurable business outcomes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Industries -->
+<section class="industries" id="industries">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Industries</div>
+      <h2>Tailored Solutions for Every Sector</h2>
+      <p>We understand the unique data challenges across East Africa's key industries.</p>
+    </div>
+    <div class="industry-grid">
+      <div class="industry-card reveal">
+        <span class="industry-emoji">🏨</span>
+        <h4>Hospitality & Tourism</h4>
+        <p>Smart analytics for hotels, lodges, and tour operators</p>
+      </div>
+      <div class="industry-card reveal">
+        <span class="industry-emoji">🏦</span>
+        <h4>Banking & Finance</h4>
+        <p>Risk modeling, fraud detection, and compliance reporting</p>
+      </div>
+      <div class="industry-card reveal">
+        <span class="industry-emoji">⚡</span>
+        <h4>Energy & Utilities</h4>
+        <p>Grid optimization, demand forecasting, and asset analytics</p>
+      </div>
+      <div class="industry-card reveal">
+        <span class="industry-emoji">🏥</span>
+        <h4>Healthcare</h4>
+        <p>Patient data analytics, operational dashboards, and AI diagnostics</p>
+      </div>
+      <div class="industry-card reveal">
+        <span class="industry-emoji">🌱</span>
+        <h4>Agriculture</h4>
+        <p>Crop yield prediction, supply chain optimization, and climate data</p>
+      </div>
+      <div class="industry-card reveal">
+        <span class="industry-emoji">🏛️</span>
+        <h4>Government & NGO</h4>
+        <p>Program monitoring, impact analytics, and citizen services</p>
+      </div>
+      <div class="industry-card reveal">
+        <span class="industry-emoji">🚛</span>
+        <h4>Logistics & Transport</h4>
+        <p>Route optimization, fleet analytics, and delivery tracking</p>
+      </div>
+      <div class="industry-card reveal">
+        <span class="industry-emoji">📱</span>
+        <h4>Telecom</h4>
+        <p>Customer analytics, network optimization, and churn prediction</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SmartEco -->
+<section class="smarteco" id="smarteco">
+  <div class="container">
+    <div class="smarteco-banner reveal">
+      <div class="smarteco-content">
+        <div class="section-tag" style="color:var(--teal)">Featured Product</div>
+        <h2>SmartEco — AI-Powered <em>Waste Management</em></h2>
+        <p>Our flagship environmental technology platform uses computer vision and AI to automate waste sorting, educate communities, and drive sustainability across East Africa's hospitality sector.</p>
+        <div class="smarteco-stats">
+          <div class="smarteco-stat">
+            <div class="val">AI</div>
+            <div class="lbl">Vision Sorting</div>
+          </div>
+          <div class="smarteco-stat">
+            <div class="val">IoT</div>
+            <div class="lbl">Integration</div>
+          </div>
+          <div class="smarteco-stat">
+            <div class="val">3+</div>
+            <div class="lbl">Hotel Partners</div>
+          </div>
+        </div>
+      </div>
+      <div class="smarteco-visual">
+        <div class="eco-graphic">
+          <div class="eco-center">♻️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Regions -->
+<section class="regions" id="regions">
+  <div class="container">
+    <div class="regions-flex">
+      <div class="regions-left reveal">
+        <div class="section-tag">Coverage</div>
+        <h2>Rooted in Rwanda. Reaching Across East Africa.</h2>
+        <p>Headquartered in Kigali — Africa's cleanest city and a rising tech hub — we serve clients across the East African Community and beyond.</p>
+        <div class="region-tags">
+          <div class="region-tag active">🇷🇼 Rwanda</div>
+          <div class="region-tag">🇰🇪 Kenya</div>
+          <div class="region-tag">🇺🇬 Uganda</div>
+          <div class="region-tag">🇹🇿 Tanzania</div>
+          <div class="region-tag">🇧🇮 Burundi</div>
+          <div class="region-tag">🇨🇩 DRC</div>
+        </div>
+      </div>
+      <div class="regions-right reveal">
+        <div class="region-card">
+          <span class="rc-flag">🇷🇼</span>
+          <h4>Rwanda (HQ)</h4>
+          <p>Kigali — Primary operations, hospitality sector focus</p>
+        </div>
+        <div class="region-card">
+          <span class="rc-flag">🇰🇪</span>
+          <h4>Kenya</h4>
+          <p>Nairobi — Financial services and tech ecosystem</p>
+        </div>
+        <div class="region-card">
+          <span class="rc-flag">🇺🇬</span>
+          <h4>Uganda</h4>
+          <p>Kampala — Energy sector and agriculture analytics</p>
+        </div>
+        <div class="region-card">
+          <span class="rc-flag">🇹🇿</span>
+          <h4>Tanzania</h4>
+          <p>Dar es Salaam — Tourism and logistics solutions</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonial -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-tag">Client Stories</div>
+      <h2>What Our Partners Say</h2>
+    </div>
+    <div class="testimonial-card reveal">
+      <blockquote>"ConsultantTech transformed how we manage waste across our properties. Their SmartEco platform delivered measurable sustainability improvements within the first quarter."</blockquote>
+      <div class="testimonial-author">Operations Director</div>
+      <div class="testimonial-role">Leading Kigali Hotel Group</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="container">
+    <div class="cta-box reveal">
+      <h2>Ready to <em>Transform</em> Your Data Strategy?</h2>
+      <p>Let's discuss how our AI and analytics solutions can drive real business outcomes for your organization.</p>
+      <div class="cta-actions">
+        <a href="mailto:info@consultantech.tech" class="btn-primary">Start a Conversation →</a>
+        <a href="#services" class="btn-secondary">View All Services</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <div class="logo-icon">CT</div>
+          <div class="logo-text">consultant<span>Tech</span></div>
+        </a>
+        <p>Enterprise data analytics, AI/ML solutions, and IT consulting for East Africa's most ambitious organizations.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Data Analytics</a></li>
+          <li><a href="#services">Business Intelligence</a></li>
+          <li><a href="#services">AI & ML Solutions</a></li>
+          <li><a href="#services">Cybersecurity</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#smarteco">SmartEco</a></li>
+          <li><a href="#industries">Industries</a></li>
+          <li><a href="#regions">Coverage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@consultantech.tech">info@consultantech.tech</a></li>
+          <li><a href="#">Kigali, Rwanda</a></li>
+          <li><a href="#">consultantech.tech</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 ConsultantTech Limited. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#" aria-label="Twitter">𝕏</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Facebook">f</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Navbar scroll effect
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
